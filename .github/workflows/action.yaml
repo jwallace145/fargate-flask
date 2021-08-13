@@ -31,7 +31,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: fargate-flask
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -43,6 +43,7 @@ jobs:
           template: cft.yaml
           capabilities: CAPABILITY_NAMED_IAM
           no-fail-on-empty-changeset: 1
+          parameter-overrides: "ContainerImageURI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
 
 

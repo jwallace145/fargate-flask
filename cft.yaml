@@ -1,3 +1,8 @@
+Parameters:
+  ContainerImageURI:
+    Type: String
+    Description: The URI of the container image to be used for the task definition
+
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -89,7 +94,7 @@ Resources:
       TaskRoleArn: !Ref TaskRole
       ContainerDefinitions:
         - Name: fargate-flask-task
-          Image: 650503560686.dkr.ecr.us-east-1.amazonaws.com/fargate-flask:latest
+          Image: !Ref ContainerImageURI
           PortMappings:
             - ContainerPort: 5000
           LogConfiguration:
@@ -143,8 +148,7 @@ Resources:
             - !Ref PublicSubnet
           SecurityGroups:
             - !Ref PublicSecurityGroup
-
-      
+     
 Outputs:
   VPC:
     Description: A reference to the created VPC
