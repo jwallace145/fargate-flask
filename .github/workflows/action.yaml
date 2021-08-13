@@ -43,18 +43,18 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: echo "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-      # - name: Deploy to AWS CloudFormation
-      #   uses: aws-actions/aws-cloudformation-github-deploy@v1
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     ECR_REPOSITORY: fargate-flask
-      #     IMAGE_TAG: ${{ github.sha }}
-      #   with:
-      #     name: fargate-flask
-      #     template: cft.yaml
-      #     capabilities: CAPABILITY_NAMED_IAM
-      #     no-fail-on-empty-changeset: 1
-      #     parameter-overrides: "ContainerImageURI=${{ ECR_REGISTRY }}/${{ ECR_REPOSITORY }}:${{ IMAGE_TAG }}"
+      - name: Deploy to AWS CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: fargate-flask
+          IMAGE_TAG: ${{ github.sha }}
+        with:
+          name: fargate-flask
+          template: cft.yaml
+          capabilities: CAPABILITY_NAMED_IAM
+          no-fail-on-empty-changeset: 1
+          parameter-overrides: "ContainerImageURI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
 
 
