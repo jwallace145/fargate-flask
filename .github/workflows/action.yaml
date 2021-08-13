@@ -41,6 +41,7 @@ jobs:
         with:
           name: fargate-flask
           template: cft.yaml
+          capabilities: CAPABILITY_IAM
 
 
 
