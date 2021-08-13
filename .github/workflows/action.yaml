@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
-        
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -30,7 +30,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: my-ecr-repo
+          ECR_REPOSITORY: fargate-flask
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
