@@ -1,0 +1,1 @@
+aws --region $1 cloudformation update-stack --stack-name $2 --template-body file://cft.yaml --capabilities CAPABILITY_NAMED_IAM --parameters ParameterKey=ContainerImageURI,ParameterValue=650503560686.dkr.ecr.us-east-1.amazonaws.com/fargate-flask:7d1fc41deeb940da4c5de184ca70460b071ad227
