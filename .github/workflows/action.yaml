@@ -6,14 +6,29 @@ on:
       - main
 
 jobs:
-  push_to_aws_ecr:
-    name: Build and Push Latest Image to AWS ECR
+  build:
+    name: Deploy Flask Application to AWS Fargate
 
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.9]
 
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v2
+
+      - name: Set Up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Dependencies
+        run: pipenv install
+      
+      - name: Test with pytest
+        run: pytest tests
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
