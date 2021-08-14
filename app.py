@@ -5,4 +5,4 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-    return "<p>CICD pipelines FTW</p>"
+    return "<p>Pytest is coo</p>"
